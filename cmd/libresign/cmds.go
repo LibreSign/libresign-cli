@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -38,9 +39,8 @@ var info = &cli.Command{
 			return cli.Exit(err, 1)
 		}
 
-		for _, v := range res {
-			fmt.Println(v)
-		}
+		j, _ := json.Marshal(res)
+		fmt.Println(string(j))
 
 		return nil
 	},
