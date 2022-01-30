@@ -1,0 +1,44 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  APP_NAME: demo
+  DIR_DIST:
+    sh: "echo $(pwd)/bin"
+  APP_VERSION: 0.1.0-beta
+  BUILD_DATE: '{{now | date "2006-01-02T15:04:05"}}'
+  DIR_BIN:
+    sh: "echo $HOME/bin"
+  GIT_HASH:
+    sh: git log -n 1 --format=%h || echo ''
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - go get ./...
+      - go mod vendor
+
+  install:download:
+    desc: Download go mod dependencies
+    cmds:
+      - go mod download
+      - go mod vendor
+
+  build:
+    desc: Build project
+    cmds:
+      - echo "Generating {{.BIN_NAME}}"
+      - "{{.EXTRA_ENVS}} go build {{.BUILDFLAGS}} {{.LDFLAGS}} -o {{.DIR_DIST}}/{{.BIN_NAME}} ./cmd/libresign/"
+      - chmod +x {{.DIR_DIST}}/{{.BIN_NAME}}
+    vars:
+      GOARCH: '{{default "amd64" .GOARCH}}'
+      GOOS: '{{default "linux" .GOOS}}'
+      CGO_ENABLED: '{{default 0 .CGO_ENABLED}}'
+      LDFLAGS: -ldflags ""
+      BIN_NAME: '{{.APP_NAME}}-{{.GOOS}}-{{.GOARCH}}{{if eq .GOOS "windows"}}.exe{{end}}'
+    env:
+      GOOS: "{{.GOOS}}"
+      GOARCH: "{{.GOARCH}}"
+      CGO_ENABLED: "{{.CGO_ENABLED}}"
