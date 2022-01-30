@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/pdfcpu/pdfcpu/pkg/api"
-	_ "github.com/pdfcpu/pdfcpu/pkg/api"
 )
 
 var ErrEmptyFileName = errors.New("EMPTY_FILE_NAME")

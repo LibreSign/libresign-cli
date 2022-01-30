@@ -25,3 +25,23 @@ var validate = &cli.Command{
 		return nil
 	},
 }
+
+var info = &cli.Command{
+	Name:  "info",
+	Usage: "info PDF file",
+	Action: func(c *cli.Context) error {
+		input := strings.TrimSpace(c.Args().First())
+
+		res, err := pkg.GetInfoFromPDFFile(input)
+
+		if err != nil {
+			return cli.Exit(err, 1)
+		}
+
+		for _, v := range res {
+			fmt.Println(v)
+		}
+
+		return nil
+	},
+}

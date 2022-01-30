@@ -11,7 +11,7 @@ func main() {
 	app := &cli.App{
 		Name:     "libresign",
 		Usage:    "libresign portable cli tool",
-		Commands: []*cli.Command{validate},
+		Commands: []*cli.Command{validate, info},
 		ExitErrHandler: func(context *cli.Context, err error) {
 			exiter, is := err.(cli.ExitCoder)
 			if is {
