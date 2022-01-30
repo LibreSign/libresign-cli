@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  APP_NAME: demo
+  APP_NAME: libresign
   DIR_DIST:
     sh: "echo $(pwd)/bin"
   APP_VERSION: 0.1.0-beta
@@ -42,3 +42,8 @@ tasks:
       GOOS: "{{.GOOS}}"
       GOARCH: "{{.GOARCH}}"
       CGO_ENABLED: "{{.CGO_ENABLED}}"
+
+  release:snapshot:
+    desc: release snapshot mode
+    cmds:
+      - goreleaser release --snapshot --rm-dist
