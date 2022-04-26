@@ -5,6 +5,9 @@
 # Dependency directories
 vendor/
 
+# Dist folder
+dist/*
+
 # Bin folder
 bin/*
 !bin/.gitkeep
